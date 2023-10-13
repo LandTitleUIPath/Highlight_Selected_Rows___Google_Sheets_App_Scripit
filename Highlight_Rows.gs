@@ -115,7 +115,7 @@ function onSelectionChange(e) {
   const highlightColor = properties.highlightColor || '#DFF8FB';
   const highlightColors = Array(maxColumns).fill(highlightColor);
 
-  const currentRowColors = e.range.offset(0, 0, 1, maxColumns).getBackgrounds(); // Use offset with event range
+  const currentRowColors = sheet.getRange(currentRow, 1, 1, maxColumns).getBackgrounds(); 
   sheet.getRange(currentRow, 1, 1, maxColumns).setBackgrounds([highlightColors]);
 
   properties.highlightedRowColors = JSON.stringify(currentRowColors[0]);
