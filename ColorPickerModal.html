@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      .color-box {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* initial shadow */
+        transition: box-shadow 0.3s ease; /* smooth transition effect */
+        border-radius: 8px; /* added rounded corners for a softer appearance */
+      }
+
+      .color-box:hover {
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* increased shadow on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="color-box" style="background-color: #FFFFCC;" onclick="setColor('#FFFFCC')"></div>
+    <div class="color-box" style="background-color: #D0E4FF;" onclick="setColor('#D0E4FF')"></div>
+    <div class="color-box" style="background-color: #DFFFD0;" onclick="setColor('#DFFFD0')"></div>
+    <div class="color-box" style="background-color: #FFE5E5;" onclick="setColor('#FFE5E5')"></div>
+    <div class="color-box" style="background-color: #E9DFF7;" onclick="setColor('#E9DFF7')"></div>
+    <div class="color-box" style="background-color: #FFEBCC;" onclick="setColor('#FFEBCC')"></div>
+    <div class="color-box" style="background-color: #F2F2F2;" onclick="setColor('#F2F2F2')"></div>
+    <div class="color-box" style="background-color: #DFF8FB;" onclick="setColor('#DFF8FB')"></div>
+    <div class="color-box" style="background-color: #E6FFEB;" onclick="setColor('#E6FFEB')"></div>
+    <div class="color-box" style="background-color: #FFF0E1;" onclick="setColor('#FFF0E1')"></div>
+    <div class="color-box" style="background-color: #FFD6D6;" onclick="setColor('#FFD6D6')"></div>
+    <div class="color-box" style="background-color: #D6FFF6;" onclick="setColor('#D6FFF6')"></div>
+
+    <script>
+      function setColor(color) {
+        google.script.run.setUserColorPreference(color);
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html>
