@@ -23,7 +23,7 @@ function turnOnRowHighlight() {
   setHighlightingStatus(true);
 
   // Show color picker dialog
-  var html = HtmlService.createHtmlOutputFromFile('ColorPicker')
+  var html = HtmlService.createHtmlOutputFromFile('ColorPickerModal')
       .setWidth(800)
       .setHeight(300);
   SpreadsheetApp.getUi().showModalDialog(html, 'Select a Highlight Color');
