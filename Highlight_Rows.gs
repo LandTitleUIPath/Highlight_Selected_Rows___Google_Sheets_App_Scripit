@@ -80,16 +80,6 @@ function setHighlightingStatus(isEnabled) {
 // -----------------------
 // Highlighting Functions
 // -----------------------
-function clearPreviouslyHighlightedRow(previouslyHighlightedRow, sheetName, originalColors) {
-    const sheet = sheetName ? SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName) : SpreadsheetApp.getActiveSheet();
-    const maxColumns = sheet.getMaxColumns();
-
-    if (previouslyHighlightedRow) {
-        if (originalColors && originalColors.length == maxColumns) {
-            sheet.getRange(Number(previouslyHighlightedRow), 1, 1, maxColumns).setBackgrounds([originalColors]);
-        }
-    }
-}
 
 function onSelectionChange(e) {
   const properties = getHighlightProperties();
@@ -100,11 +90,12 @@ function onSelectionChange(e) {
   }
 
   const sheet = e.source.getActiveSheet(); // Use event object
+  const sheetId = sheet.getSheetId();  // Fetch the sheet's ID
   const currentRow = e.range.getRow();     // Use event object
   const previouslyHighlightedRow = properties.highlightedRow;
 
   if (previouslyHighlightedRow && previouslyHighlightedRow != currentRow) {
-      clearPreviouslyHighlightedRow(previouslyHighlightedRow, properties.highlightedSheetName, JSON.parse(properties.highlightedRowColors));
+      clearPreviouslyHighlightedRow(previouslyHighlightedRow, properties.highlightedSheetId, JSON.parse(properties.highlightedRowColors));
   }
 
   if (previouslyHighlightedRow == currentRow) {
@@ -120,9 +111,20 @@ function onSelectionChange(e) {
 
   properties.highlightedRowColors = JSON.stringify(currentRowColors[0]);
   properties.highlightedRow = currentRow.toString();
-  properties.highlightedSheetName = sheet.getName();
+  properties.highlightedSheetId = sheetId;  // Store the sheet's ID instead of the name
 
   setHighlightProperties(properties);
+}
+
+function clearPreviouslyHighlightedRow(previouslyHighlightedRow, sheetId, originalColors) {
+    const sheet = sheetId ? SpreadsheetApp.getActiveSpreadsheet().getSheets().find(s => s.getSheetId() === sheetId) : SpreadsheetApp.getActiveSheet();
+    const maxColumns = sheet.getMaxColumns();
+
+    if (previouslyHighlightedRow) {
+        if (originalColors && originalColors.length == maxColumns) {
+            sheet.getRange(Number(previouslyHighlightedRow), 1, 1, maxColumns).setBackgrounds([originalColors]);
+        }
+    }
 }
 
 function restoreOriginalColorsForRow(row, maxColumns) {
